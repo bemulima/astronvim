@@ -9,4 +9,13 @@ return {
   --     require("lsp_signature").setup()
   --   end,
   -- },
+    {
+    "mg979/vim-visual-multi",
+      branch = "master",
+      lazy = false,
+      init = function()
+        vim.g.VM_maps = {
+          ["Find Under"] = "<C-n>"
+        }
+    },
 }
