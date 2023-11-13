@@ -17,5 +17,6 @@ return {
         vim.g.VM_maps = {
           ["Find Under"] = "<C-n>"
         }
+    	end,
     },
 }
