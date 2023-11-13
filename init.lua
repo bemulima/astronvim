@@ -33,7 +33,7 @@ return {
       format_on_save = {
         enabled = false, -- enable or disable format on save globally
         allow_filetypes = { -- enable format on save for specified filetypes only
-          "go","php","ts","tsx","js","css","scss","jsx","html","htm","lua","json"
+          "go","php","typescript","typescript.tsx","typescriptreact", "js","css","scss","jsx","html","htm","lua","json"
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
           -- "python",
@@ -51,6 +51,8 @@ return {
     -- enable servers that you already have installed without mason
     servers = {
       -- "pyright"
+      "phpactor",
+      "typescript-language-server"
     },
   },
 
