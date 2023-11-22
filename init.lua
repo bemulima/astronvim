@@ -27,6 +27,10 @@ return {
   },
 
   lsp = {
+    setup_handlers = {
+      -- add custom handler
+      tsserver = function(_, opts) require("typescript").setup { server = opts } end,
+    },
     -- customize lsp formatting options
     formatting = {
       -- control auto formatting on save
@@ -52,7 +56,27 @@ return {
     servers = {
       -- "pyright"
       "phpactor",
-      "typescript-language-server"
+      --"phpdoc",
+      "psalm",
+      --"typescript-language-server"
+    },
+    config = { 
+      phpactor = function() return {
+          --cmd = { "phpactor" },
+            filetypes = { "php"},
+            root_dir = require("lspconfig.util").root_pattern("composer.json", ".git"),
+            -- init_options = {
+            --   ["language_server_worse_reflection.inlay_hints.enable"] = true,
+            --   ["language_server_worse_reflection.inlay_hints.params"] = true,
+            --   -- ["language_server_worse_reflection.inlay_hints.types"] = true,
+            --   ["language_server_configuration.auto_config"] = false,
+            --   ["code_transform.import_globals"] = true,
+            --   ["language_server_phpstan.enabled"] = true,
+            --   ["language_server_phpstan.level"] = 7,
+            --   ["language_server_phpstan.bin"] = "phpstan",
+            -- },
+        }
+      end,
     },
   },
 
@@ -84,4 +108,56 @@ return {
     --   },
     -- }
   end,
+  plugins = {
+    {
+      "rebelot/heirline.nvim",
+      opts = function(_, opts)
+        local status = require "astronvim.utils.status"
+
+        opts.winbar = { -- create custom winbar
+          -- store the current buffer number
+          init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
+          fallthrough = false, -- pick the correct winbar based on condition
+          -- inactive winbar
+          {
+            condition = function() return not status.condition.is_active() end,
+            -- show the path to the file relative to the working directory
+            status.component.separated_path { path_func = status.provider.filename { modify = ":.:h" } },
+            -- add the file name and icon
+            status.component.file_info {
+              file_icon = { hl = status.hl.file_icon "winbar", padding = { left = 0 } },
+              file_modified = false,
+              file_read_only = false,
+              hl = status.hl.get_attributes("winbarnc", true),
+              surround = false,
+              update = "BufEnter",
+            },
+          },
+          -- active winbar
+          {
+            -- show the path to the file relative to the working directory
+            status.component.separated_path { path_func = status.provider.filename { modify = ":.:h" } },
+            -- add the file name and icon
+            status.component.file_info { -- add file_info to breadcrumbs
+              file_icon = { hl = status.hl.filetype_color, padding = { left = 0 } },
+              file_modified = false,
+              file_read_only = false,
+              hl = status.hl.get_attributes("winbar", true),
+              surround = false,
+              update = "BufEnter",
+            },
+            -- show the breadcrumbs
+            status.component.breadcrumbs {
+              icon = { hl = true },
+              hl = status.hl.get_attributes("winbar", true),
+              prefix = true,
+              padding = { left = 0 },
+            },
+          },
+        }
+
+        return opts
+      end,
+    },
+  },
 }

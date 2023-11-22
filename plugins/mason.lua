@@ -11,7 +11,7 @@ return {
         "tsserver",
         "quick_lint_js",
         "vtsls",
-        "biome",
+        --"biome",
         "cssls",
         "cssmodules_ls",
         "unocss",
