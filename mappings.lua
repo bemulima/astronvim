@@ -37,6 +37,12 @@ return {
       function()
         require('telescope').extensions.refactoring.refactors()
       end,
+    },
+    ["<leader>fS"] = {
+      function()
+        require("spectre").toggle()
+      end,
+      desc = 'Toggle Spectre',
     }
   },
   t = {
