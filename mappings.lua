@@ -30,8 +30,14 @@ return {
     -- tables with the `name` key will be registered with which-key if it's installed
     -- this is useful for naming menus
     ["<leader>b"] = { name = "Buffers" },
+    ["<leader>r"] = { name = "Refactoring" },
     -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
+    ["<leader>rr"] = {
+      function()
+        require('telescope').extensions.refactoring.refactors()
+      end,
+    }
   },
   t = {
     -- setting a mapping to false will disable it

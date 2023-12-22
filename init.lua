@@ -109,6 +109,7 @@ return {
     -- }
   end,
   plugins = {
+    {"nvim-lua/plenary.nvim"},
     {
       "rebelot/heirline.nvim",
       opts = function(_, opts)
